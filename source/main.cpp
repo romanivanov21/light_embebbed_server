@@ -1,5 +1,6 @@
 //internal
 #include "tcp_server.h"
+#include "yaml.h"
 
 //internal library
 #include "connection_traits.h"
@@ -11,7 +12,7 @@
 #include <signal.h>
 
 int main(int argc, char** argv)
-{
+{   
     sigset_t sigset;
     siginfo_t siginfo;
     chdir("/");

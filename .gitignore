@@ -1,0 +1,6 @@
+/bin
+/build_dev
+/yaml-cpp
+CMakeLists.txt.user
+*.swp
+*.pyc

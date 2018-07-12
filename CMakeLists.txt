@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.2)
 
-set(PROJECT server)
+set(PROJECT light_embedded_server)
 
 set (CMAKE_CXX_STANDARD_REQUIRED on)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
@@ -52,6 +52,20 @@ include_directories(libnetwork_api/include/system)
 #subdirectory libcommon
 add_subdirectory(libcommon)
 include_directories(libcommon/include)
+
+include(ExternalProject)
+
+ExternalProject_Add(yaml-cpp
+                    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp
+                    GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
+                    GIT_TAG master
+                    UPDATE_COMMAND git pull origin master
+                    BINARY_DIR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
+                    CMAKE_ARGS 
+                       -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp 
+                       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+		    )
+include_directories(yaml-cpp/include/yaml-cpp)
 
 #subproject testing
 add_subdirectory(testing)
