@@ -1,39 +1,28 @@
 //internal
 #include "tcp_server.h"
 #include "yaml.h"
+#include "server_config_mananger.h"
+#include "server_config_parser.h"
+#include "yaml_config_parser.h"
+
+#include "directory.h"
 
 //internal library
-#include "connection_traits.h"
 #include "endpoint.h"
 #include "endpoint_ipv4.h"
 
-#include <unistd.h>
-#include <sys/wait.h>
-#include <signal.h>
+#include <iostream>
 
 int main(int argc, char** argv)
-{   
-    sigset_t sigset;
-    siginfo_t siginfo;
-    chdir("/");
-    close(STDIN_FILENO);
-    close(STDOUT_FILENO);
-    close(STDERR_FILENO);
-    //setup_signal( sigset,siginfo );
+{
+    CONFIG_INIT(sys::directory::get_current_directory() + "/server_config.yaml");
+    const auto& cfg = GET_CONFIG();
 
-    network::endpoint_unique_ptr ep =
-            std::make_unique<network::endpoint_ipv4>
-            ("127.0.0.1", 8080);
-    tcp_server s(ep);
-    s.run();
-
-    // wait signal
-    sigwaitinfo(&sigset, &siginfo);
-    if(siginfo.si_signo == SIGTERM) // если пришел сигнал о завершении программы
-    {
-        s.stop();
-        exit(0);
-    }
+//    network::endpoint_unique_ptr ep =
+//            std::make_unique<network::endpoint_ipv4>
+//            ("127.0.0.1", 8080);
+//    tcp_server s(ep);
+//    s.run();
 
 	return 0;
 }

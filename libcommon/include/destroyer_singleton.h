@@ -17,10 +17,12 @@ public:
     destroyer_singleton() = default;
     ~destroyer_singleton();
 
-    void init_obj( T* obj ) noexcept;
+    destroyer_singleton(const destroyer_singleton&) = delete;
+    destroyer_singleton& operator=( const destroyer_singleton&) = delete;
 
-    destroyer_singleton( const destroyer_singleton& copy ) = delete;
-    destroyer_singleton& operator=( const destroyer_singleton& copy ) = delete;
+protected:
+    void init_obj(T* obj) noexcept;
+
 private:
     T* obj_;
 };
@@ -32,9 +34,9 @@ destroyer_singleton<T>::~destroyer_singleton()
 }
 
 template <class T>
-void destroyer_singleton<T>::init_obj( T* obj ) noexcept
+void destroyer_singleton<T>::init_obj(T* obj) noexcept
 {
-    assert( obj != nullptr );
+    assert(obj != nullptr);
 
     obj_ = obj;
 }

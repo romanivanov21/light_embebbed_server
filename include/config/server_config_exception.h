@@ -13,8 +13,8 @@
 class server_config_exception : public std::exception
 {
  public:
-    server_config_exception( const std::string& ex ) noexcept;
-    server_config_exception( msg_type type ) noexcept;
+    server_config_exception(const std::string& ex) noexcept;
+    server_config_exception(msg_type type) noexcept;
     ~server_config_exception() = default;
 
     /**

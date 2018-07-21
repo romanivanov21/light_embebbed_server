@@ -5,6 +5,7 @@ set(PROJECT light_embedded_server)
 set (CMAKE_CXX_STANDARD_REQUIRED on)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lstdc++")
+set (CMAKE_CACHEFILE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build_dev)
 
 SET(FLAG_DEBUG "Debug")
 
@@ -30,9 +31,26 @@ project(${PROJECT})
 
 find_package(Threads)
 
+
+include(ExternalProject)
+
+ExternalProject_Add(yaml-cpp
+                    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp
+                    GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
+                    GIT_TAG master
+                    UPDATE_COMMAND git pull
+                    BINARY_DIR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
+                    CMAKE_ARGS
+                       -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp
+                       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+                    )
+include_directories(yaml-cpp/include/yaml-cpp)
+
 #current project
 aux_source_directory(source SOURCES)
+aux_source_directory(source/config SOURCES)
 include_directories(include)
+include_directories(include/config)
 
 #subproject libtherad_api
 add_subdirectory(libthread_api)
@@ -53,22 +71,8 @@ include_directories(libnetwork_api/include/system)
 add_subdirectory(libcommon)
 include_directories(libcommon/include)
 
-include(ExternalProject)
-
-ExternalProject_Add(yaml-cpp
-                    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp
-                    GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
-                    GIT_TAG master
-                    UPDATE_COMMAND git pull origin master
-                    BINARY_DIR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
-                    CMAKE_ARGS 
-                       -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp 
-                       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-		    )
-include_directories(yaml-cpp/include/yaml-cpp)
-
 #subproject testing
 add_subdirectory(testing)
 
 add_executable(${PROJECT} ${SOURCES})
-target_link_libraries(${PROJECT} pthread thread_api common network_api http_api)
+target_link_libraries(${PROJECT} pthread thread_api common network_api http_api yaml-cpp.a)
