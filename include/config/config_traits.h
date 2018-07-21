@@ -35,7 +35,7 @@ namespace config
         struct server_connection
         {
             /* Перечисление для опеределения валидности конфигурации ip_version */
-            enum ip_version_type { CONFIG_IPv4 = 4, CONFIG_IPv6 = 6 };
+            enum class ip_version_type : std::uint8_t { CONFIG_IPv4 = 4, CONFIG_IPv6 = 6 };
 
             static bool is_valid_ip_address(const std::string&, ip_version_type);
 

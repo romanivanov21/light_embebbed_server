@@ -7,12 +7,19 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lstdc++")
 set(TESTING_PROJECT_NAME testing)
 
 aux_source_directory(source/ TESTING_SOURCES)
+aux_source_directory(../source/config TESTING_SOURCES)
 include_directories(include)
+#thread_api headers
 include_directories(../libthread_api/include)
+#network_api headers
 include_directories(../libnetwork_api/include)
 include_directories(../libnetwork_api/include/connection)
-#using library common
+#common headers
 include_directories(../libcommon/include/)
+#main program headers
+include_directories(../include/config)
+#yaml-cpp headers
+include_directories(yaml-cpp/include/yaml-cpp)
 
 link_directories(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
@@ -50,6 +57,6 @@ endif()
 
 # Trivial example using gtest and gmock
 add_executable(${TESTING_PROJECT_NAME} ${TESTING_SOURCES})
-target_link_libraries(${TESTING_PROJECT_NAME} gtest gmock_main http_api thread_api network_api common)
+target_link_libraries(${TESTING_PROJECT_NAME} gtest gmock_main http_api thread_api network_api common yaml-cpp.a)
 add_test(NAME example_test COMMAND example)
 

@@ -2,6 +2,7 @@
 #include "libnetwork_api_test.h"
 #include "libthread_api_test.h"
 #include "libhttp_api_test.h"
+#include "server_config_mananger_test.h"
 
 int main(int argc, char *argv[])
 {
