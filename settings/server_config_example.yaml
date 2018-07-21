@@ -21,7 +21,3 @@ Server:
   error_log: '/home/roman/work/C++ /web_server/log/error.log'           #директрия до файла ошибок
   access_log: '/home/roman/work/C++ /web_server/log/access.log'         #директрия для файла выолненных действий
 
-#--- Настройки дополнительных модулей сервера
-Modules:
- #--- Модуль CGI
- mod_CGI: 'var/www/web_server/config/mods-avaible'     #конфиг модуля CGI
