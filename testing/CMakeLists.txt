@@ -19,7 +19,7 @@ include_directories(../libcommon/include/)
 #main program headers
 include_directories(../include/config)
 #yaml-cpp headers
-include_directories(yaml-cpp/include/yaml-cpp)
+include_directories(3rdparty/yaml-cpp/include/yaml-cpp)
 
 link_directories(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 

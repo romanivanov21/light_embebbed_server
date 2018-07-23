@@ -35,16 +35,16 @@ find_package(Threads)
 include(ExternalProject)
 
 ExternalProject_Add(yaml-cpp
-                    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp
-                    GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
-                    GIT_TAG master
-                    UPDATE_COMMAND git pull
+                    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/yaml-cpp
+#                    GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
+#                    GIT_TAG master
+#                    UPDATE_COMMAND git pull
                     BINARY_DIR ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
                     CMAKE_ARGS
                        -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp
                        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                     )
-include_directories(yaml-cpp/include/yaml-cpp)
+include_directories(3rdparty/yaml-cpp/include/yaml-cpp)
 
 #current project
 aux_source_directory(source SOURCES)

@@ -1,12 +1,14 @@
 /bin
 /build_dev
 /yaml-cpp
+3rdparty/
 CMakeLists.txt.user
 *.swp
 *.pyc
 .excludes
 *.save
 .gitignore.save
+/.idea
 .idea/light_embedded_server.iml
 .idea/misc.xml
 .idea/modules.xml
