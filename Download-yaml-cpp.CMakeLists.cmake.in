@@ -1,0 +1,16 @@
+cmake_minimum_required(VERSION 2.8.2)
+
+project(${DL_ARGS_PROJ} NONE)
+
+include(ExternalProject)
+ExternalProject_Add(${DL_ARGS_PROJ}
+                    ${DL_ARGS_UNPARSED_ARGUMENTS}
+                    CMAKE_ARGS
+                        "-DCMAKE_BUILD_TYPE=Release"
+                    SOURCE_DIR          "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/${DL_ARGS_PROJ}"
+                    BINARY_DIR          "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/${DL_ARGS_PROJ}"
+                    CONFIGURE_COMMAND   ${CMAKE_COMMAND} ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/${DL_ARGS_PROJ}/CMakeLists.txt --build .
+                    BUILD_COMMAND       make
+                    INSTALL_COMMAND     ${CMAKE_COMMAND} -DCMAKE_INSTALL_PREFIX=build -P "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/${DL_ARGS_PROJ}/cmake_install.cmake"
+                    TEST_COMMAND        ""
+)
