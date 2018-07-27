@@ -19,9 +19,10 @@ include_directories(../libcommon/include/)
 #main program headers
 include_directories(../include/config)
 #yaml-cpp headers
-include_directories(3rdparty/yaml-cpp/include/yaml-cpp)
+include_directories(3rdparty/yaml-cpp/build/include/yaml-cpp)
 
 link_directories(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/yaml-cpp/build/lib)
 
 include(CTest)
 
@@ -31,11 +32,12 @@ else()
     set(UPDATE_DISCONNECTED_IF_AVAILABLE "UPDATE_DISCONNECTED 1")
 endif()
 
-include(DownloadProject.cmake)
+include(../DownloadProject.cmake)
 download_project(PROJ                googletest
                  GIT_REPOSITORY      https://github.com/google/googletest.git
                  GIT_TAG             master
                  ${UPDATE_DISCONNECTED_IF_AVAILABLE}
+                 CONFIGURE_FILE      "${CMAKE_CURRENT_SOURCE_DIR}/Download-googletest.CMakeLists.cmake.in"
 )
 
 # Prevent GoogleTest from overriding our compiler/linker options
